@@ -62,6 +62,33 @@
   });
   matchMedia('(max-width:820px)').addEventListener('change',()=>toggleMenu(false));
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+  // Decorative atmosphere uses only geometry; the original moth remains the only brand image.
+  const atmosphere=document.createElement('div');
+  atmosphere.className='ambient-background';atmosphere.setAttribute('aria-hidden','true');
+  atmosphere.innerHTML='<div class="ambient-mist"></div><div class="ambient-tracery"></div>';
+  for(let i=0;i<22;i++){
+    const spark=document.createElement('i');spark.className='ambient-spark';
+    spark.style.cssText=`--x:${(i*47+13)%100}%;--y:${(i*31+7)%100}%;--drift:${(i%2?1:-1)*(25+i*3)}px;--duration:${16+i%7*3}s;--delay:-${i*2.7}s;--size:${i%4===0?3:2}px`;
+    atmosphere.append(spark);
+  }
+  document.body.prepend(atmosphere);
+  const hero=document.querySelector('.world-hero');
+  if(hero){const local=atmosphere.cloneNode(true);local.className='ambient-background hero-atmosphere';hero.prepend(local);}
+  const motionButton=document.createElement('button');
+  motionButton.className='ambient-toggle';motionButton.type='button';
+  let motionPaused=false;
+  try{motionPaused=localStorage.getItem('erratis-background-paused')==='true';}catch{}
+  function syncMotion(){
+    document.body.classList.toggle('ambient-paused',motionPaused);
+    motionButton.textContent=motionPaused?'▶ Фон':'Ⅱ Фон';
+    motionButton.setAttribute('aria-pressed',String(motionPaused));
+    motionButton.setAttribute('aria-label',motionPaused?'Включить движение фона':'Приостановить движение фона');
+    motionButton.hidden=reduceMotion.matches;
+  }
+  motionButton.addEventListener('click',()=>{motionPaused=!motionPaused;syncMotion();try{localStorage.setItem('erratis-background-paused',String(motionPaused));}catch{}});
+  document.querySelector('footer').append(motionButton);
+  reduceMotion.addEventListener('change',syncMotion);syncMotion();
+  document.addEventListener('visibilitychange',()=>document.body.classList.toggle('ambient-suspended',document.hidden));
   for(const play of document.querySelectorAll('.play-flow')) play.addEventListener('click',()=>{
     const nodes=play.closest('.production-map').querySelectorAll('.flow-node');
     if(reduceMotion.matches)return;

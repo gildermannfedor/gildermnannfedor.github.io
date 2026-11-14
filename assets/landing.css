@@ -19,3 +19,56 @@
 @media print{.world-hero,.world-section,.world-archive{color:black;background:white;break-inside:avoid}.landing .world-topbar,.hero-grain,.emblem-scene,.moth-divider,.landing .sidebar{display:none!important}.hero-contents{display:block}.world-section,.world-archive{margin:30px 0;width:100%}.landing footer{display:none}.world-hero h1,.world-section h2,.world-section h3{color:black}}
 }
 
+
+/* Bronze, wine and graphite: drawn atmosphere, no added image assets. */
+:root{--bronze:#b68b51;--bronze-bright:#d3b27c;--bronze-dark:#72512f}
+body{isolation:isolate}
+.ambient-background{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;contain:strict;opacity:.55}
+.ambient-mist{position:absolute;inset:-12%;background:radial-gradient(ellipse at 12% 35%,#65132b3d,transparent 45%),radial-gradient(ellipse at 86% 70%,#95713f20,transparent 43%),radial-gradient(ellipse at 74% 9%,#4b0e224f,transparent 48%)}
+.ambient-tracery{position:absolute;right:-22vw;top:18vh;width:72vw;aspect-ratio:1;border:1px solid #b68b511c;transform:rotate(35deg);background:repeating-linear-gradient(90deg,transparent 0,transparent calc(25% - 1px),#b68b5109 25%)}
+.ambient-tracery::before,.ambient-tracery::after{content:'';position:absolute;inset:13%;border:1px solid #b68b5126;transform:rotate(45deg)}
+.ambient-tracery::after{inset:28%;border-color:#6c203833;transform:rotate(0)}
+.ambient-spark{position:absolute;left:var(--x);top:var(--y);width:var(--size);height:var(--size);border-radius:50%;background:var(--bronze-bright);box-shadow:0 0 8px #b68b5170;opacity:.5}
+.hero-atmosphere{position:absolute;opacity:1}
+.hero-atmosphere .ambient-tracery{width:650px;right:-300px;top:10%}
+.hero-atmosphere .ambient-mist{background:radial-gradient(ellipse at 78% 47%,#72182b50,transparent 53%),radial-gradient(ellipse at 20% 90%,#ac783424,transparent 50%)}
+.world-kicker,.path-category,.principle-no,.world-facts b,.world-topnav a:hover,.start-road li>span{color:var(--bronze-bright)!important}
+.world-hero h1{background:linear-gradient(115deg,#f0e6d6 20%,#d3b27c 70%,#b68b51);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero-copy .world-kicker span{background:var(--bronze)}
+.world-button{border-color:#a67945;box-shadow:inset 0 1px #d3b27c25,0 6px 25px #13070b55}
+.world-button:hover{border-color:var(--bronze-bright)}
+.world-topnav a::after{background:var(--bronze)}
+.world-principles article,.start-road li{border-top-color:#72512f90}
+.moth-divider span{background:linear-gradient(90deg,transparent,#a6794580)}
+.moth-divider i,.archive-brand{background:var(--bronze)}
+.halo-outer{border-color:#b68b5170;box-shadow:0 0 0 9px #b68b5107,0 0 0 10px #b68b5126}
+.halo-inner{border-color:#b68b5145}
+.halo-outer::before,.halo-inner::after{content:'';position:absolute;inset:-13px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg 20deg,#b68b51b0 21deg 65deg,transparent 66deg 200deg,#b68b5170 201deg 230deg,transparent 231deg);mask:radial-gradient(transparent calc(70% - 2px),#000 calc(70% - 1px),#000 70%,transparent calc(70% + 1px));-webkit-mask:radial-gradient(transparent calc(70% - 2px),#000 calc(70% - 1px),#000 70%,transparent calc(70% + 1px))}
+.halo-inner::after{inset:11px;transform:rotate(70deg)}
+.emblem-scene::after{content:'';position:absolute;inset:8% 10%;border:1px solid #b68b5129;transform:rotate(45deg);z-index:-1}
+.emblem-ticks{background:repeating-conic-gradient(#b68b5180 0deg .45deg,transparent .45deg 10deg)}
+.scene-index,.sigil-name,.sigil-caption{color:var(--bronze-bright)}
+.path-art{background:radial-gradient(ellipse,#7a172a55,#b68b5116 45%,transparent 70%)}
+.path-art::after{content:'';position:absolute;width:84%;aspect-ratio:1;border:1px solid #b68b513d;border-radius:50%;border-left-color:transparent;border-bottom-color:transparent;pointer-events:none}
+.path-entry:hover .orbit-rule{border-color:var(--bronze)}
+.world-archive{border-color:#876139;background:linear-gradient(115deg,#300d1b,#22181a)}
+.eyebrow,.nav-group>p,.toc>p{color:var(--bronze-bright)}
+.article-head::after{background:var(--bronze);opacity:.12}
+.ambient-toggle{font-size:11px;min-height:44px;padding:8px 13px;color:var(--bronze-bright);border:1px solid #72512f;background:#1d1917;border-radius:2px;white-space:nowrap}
+.ambient-toggle:hover{background:#30251b;border-color:var(--bronze)}
+.ambient-toggle:focus-visible{outline:2px solid var(--bronze-bright);outline-offset:4px}
+@media(prefers-reduced-motion:no-preference){
+ @keyframes ember-drift{0%{transform:translate3d(0,35px,0);opacity:0}20%{opacity:.65}80%{opacity:.35}100%{transform:translate3d(var(--drift),-160px,0);opacity:0}}
+ @keyframes wine-mist{from{transform:translate3d(-3%,-2%,0) scale(1)}to{transform:translate3d(4%,3%,0) scale(1.08)}}
+ @keyframes bronze-orbit{to{transform:rotate(360deg)}}
+ @keyframes sigil-breathe{from{opacity:.3}to{opacity:.8}}
+ .ambient-spark{animation:ember-drift var(--duration) var(--delay) linear infinite}
+ .ambient-mist{animation:wine-mist 24s ease-in-out infinite alternate}
+ .halo-outer::before{animation:bronze-orbit 80s linear infinite}
+ .halo-inner::after{animation:bronze-orbit 55s linear infinite reverse}
+ .path-art::after{animation:bronze-orbit 38s linear infinite}
+ .emblem-scene::after{animation:sigil-breathe 9s ease-in-out infinite alternate}
+}
+.ambient-paused .ambient-background *,.ambient-paused .halo-outer::before,.ambient-paused .halo-inner::after,.ambient-paused .path-art::after,.ambient-paused .emblem-scene::after,.ambient-suspended .ambient-background *,.ambient-suspended .halo-outer::before,.ambient-suspended .halo-inner::after,.ambient-suspended .path-art::after,.ambient-suspended .emblem-scene::after{animation-play-state:paused!important}
+@media(max-width:700px){.ambient-spark:nth-child(n+14){display:none}.ambient-background{opacity:.4}.hero-atmosphere{opacity:.85}.ambient-tracery{width:120vw;right:-75vw}.hero-atmosphere .ambient-tracery{width:430px;right:-290px;top:45%}.ambient-toggle{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.ambient-background *,.halo-outer::before,.halo-inner::after,.path-art::after,.emblem-scene::after{animation:none!important}.ambient-toggle{display:none}}
