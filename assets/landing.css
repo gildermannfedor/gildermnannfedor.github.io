@@ -101,3 +101,7 @@ body{isolation:isolate}
 
 /* Upright display text on the homepage, preserving emphasis colors. */
 .landing em{font-style:normal}
+
+.table-wrap img[src*="/prefix-"]{width:128px;height:32px;object-fit:contain;image-rendering:pixelated}
+
+.table-wrap td:has(img[src*="/prefix-"]){font-size:0;line-height:0}.table-wrap img[src*="/prefix-"]{vertical-align:middle}
