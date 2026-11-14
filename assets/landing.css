@@ -98,3 +98,6 @@ body{isolation:isolate}
 /* Supplied beige vector logo: retain its color in brand placements. */
 .brand img,.footer-brand img{filter:none}
 .emblem-wing,.archive-brand,.moth-divider i{background:rgb(87.3%,83.9%,77.9%)}
+
+/* Upright display text on the homepage, preserving emphasis colors. */
+.landing em{font-style:normal}
