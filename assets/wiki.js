@@ -51,7 +51,7 @@
     }
   }
   function openSearch() { returnFocus=document.activeElement;dialog.showModal();input.focus();load(); }
-  opener.addEventListener('click',openSearch);
+  for(const trigger of document.querySelectorAll('.search-open,[data-open-search]'))trigger.addEventListener('click',openSearch);
   document.querySelector('.search-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>returnFocus?.focus());
   dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
