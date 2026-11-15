@@ -1,4 +1,4 @@
-@font-face{font-family:'Marmelad';src:url('Marmelad-Regular.ttf?v=20261115-release') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Marmelad';src:url('Marmelad-Regular.ttf?v=20261115-icons') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @layer reset,base,layout,components,responsive;
 @layer reset{*{box-sizing:border-box}body,h1,h2,h3,p,figure{margin:0}button,input,select{font:inherit}img{max-width:100%}button,a,input,select{-webkit-tap-highlight-color:transparent}html{scroll-padding-top:98px;scroll-behavior:auto}}
 @layer base{
@@ -42,3 +42,5 @@ body{background:var(--bg);color:var(--ink);font:16px/1.7 var(--sans)}a{color:var
 }
 @layer components{.cast-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0 23px;padding:14px;background:#241a1e;border:1px solid #512633;border-radius:4px}.cast-rank{font-size:11px;letter-spacing:.06em;color:#b8a499;margin-right:8px}.cast-token{display:flex;align-items:center;gap:7px;border:1px solid #5b3a45;background:#1b181a;padding:8px 10px;min-height:44px;border-radius:2px}.cast-token b{font:12px var(--sans);color:#d7ccc2}.cast-token .item-art{width:28px;height:28px}.cast-arrow{font-size:12px;color:#a47679}.staff-token{border-color:#7a354b;background:#32131f}.cast-line:hover .cast-token{border-color:#8c5360}.cast-line:hover .staff-token{border-color:#be8b82}.cast-line .item-art{transition:transform .25s}.cast-line:hover .item-art{transform:translateY(-2px)}}
 @layer responsive{@media(max-width:520px){.cast-line{gap:7px;padding:12px 10px}.cast-rank{width:100%;margin:0 0 4px}.cast-token{gap:4px;padding:6px}.cast-token .item-art{width:24px;height:24px}.cast-token b{font-size:10px}.cast-arrow{font-size:10px}}@media(prefers-reduced-motion:reduce){.cast-line:hover .item-art{transform:none}}}
+
+.inline-item{display:inline-block;width:20px;height:20px;vertical-align:-.25em;object-fit:contain;image-rendering:pixelated;margin-right:4px;pointer-events:none}.item-mention{display:inline}.recipe figcaption .inline-item{width:20px;height:20px}.prose h2 .inline-item,.prose h3 .inline-item{width:25px;height:25px}.results .inline-item{width:18px;height:18px;margin-right:4px}

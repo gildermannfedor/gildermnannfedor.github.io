@@ -10,6 +10,34 @@
   const main = document.querySelector('main');
   let corpus, pending, returnFocus;
   const normalize = value => value.toLocaleLowerCase('ru').replaceAll('ё','е');
+  let itemIcons, iconPending;
+  function loadIcons(){
+    const source=document.querySelector('script[data-icons]');
+    if(!source){itemIcons=[];return Promise.resolve(itemIcons);}
+    if(!iconPending)iconPending=fetch(source.dataset.icons)
+      .then(response=>{if(!response.ok)throw Error('Unavailable');return response.json();})
+      .then(entries=>itemIcons=entries.map(entry=>({...entry,matcher:new RegExp(entry.pattern,'giu')})))
+      .catch(()=>itemIcons=[]);
+    return iconPending;
+  }
+  function itemText(value){
+    const fragment=document.createDocumentFragment();
+    if(!itemIcons?.length){fragment.append(value);return fragment;}
+    const normalized=value.replaceAll('ё','е').replaceAll('Ё','Е');let position=0;
+    while(position<value.length){
+      let best;
+      for(const entry of itemIcons){entry.matcher.lastIndex=position;const match=entry.matcher.exec(normalized);if(match&&(!best||match.index<best.match.index))best={entry,match};}
+      if(!best){fragment.append(value.slice(position));break;}
+      if(best.entry.exact_case&&value.slice(best.match.index,best.match.index+best.match[0].length)!==best.entry.label){fragment.append(value.slice(position,best.match.index+best.match[0].length));position=best.match.index+best.match[0].length;continue;}
+      fragment.append(value.slice(position,best.match.index));
+      const picture=document.createElement('img');picture.className='inline-item';picture.width=20;picture.height=20;picture.alt='';picture.setAttribute('aria-hidden','true');
+      const cooked={'Говядина':'Приготовленная говядина','Свинина':'Приготовленная свинина','Курица':'Приготовленная курица','Баранина':'Приготовленная баранина','Крольчатина':'Приготовленная крольчатина','Лосось':'Приготовленный лосось'}[best.entry.label];
+      const entry=normalized.toLocaleLowerCase('ru').includes('приготовленн')&&cooked?itemIcons.find(item=>item.label===cooked)||best.entry:best.entry;
+      picture.src=new URL('item-textures.svg#'+entry.icon,new URL(document.querySelector('script[data-icons]').dataset.icons,location.href)).href;
+      fragment.append(picture,value.slice(best.match.index,best.match.index+best.match[0].length));position=best.match.index+best.match[0].length;
+    }
+    return fragment;
+  }
   function toggleMenu(expanded) {
     menu.setAttribute('aria-expanded', String(expanded));
     sidebar.classList.toggle('open', expanded);
@@ -31,7 +59,7 @@
     results.replaceChildren();
     if (!query) { info.textContent='Введите название или часть слова.'; return; }
     info.textContent='Поиск…';
-    const records=await load();
+    const [records]=await Promise.all([load(),loadIcons()]);
     if (normalize(input.value.trim())!==query) return;
     if (!records) { info.textContent='Поиск сейчас недоступен. Откройте нужную главу через разделы.'; return; }
     const terms=query.split(/\s+/).filter(Boolean);
@@ -43,10 +71,10 @@
     info.textContent=ranked.length ? `Найдено: ${ranked.length}${ranked.length>20?' · показаны первые 20':''}. Tab — перейти к результатам.` : 'Ничего не найдено. Попробуйте часть названия.';
     for (const {record} of shown) {
       const link=document.createElement('a'), group=document.createElement('small'), title=document.createElement('span'), excerpt=document.createElement('p');
-      link.href=record.url; group.textContent=record.group; title.textContent=record.title;
+      link.href=record.url; group.textContent=record.group; title.append(itemText(record.title));
       const plain=record.text.replace(/\s+/g,' ').trim();
       const at=Math.max(0,normalize(plain).indexOf(terms[0])-50);
-      excerpt.textContent=(at?'…':'')+plain.slice(at,at+170)+(plain.length>at+170?'…':'');
+      excerpt.append(itemText((at?'…':'')+plain.slice(at,at+170)+(plain.length>at+170?'…':'')));
       link.append(group,title,excerpt);results.append(link);
     }
   }

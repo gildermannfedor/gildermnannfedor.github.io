@@ -27,7 +27,7 @@ jobs:
           mkdir _site
           cp -- *.html search.json .nojekyll _site/
           mkdir _site/assets
-          cp -- assets/wiki.css assets/landing.css assets/wiki.js assets/mark.svg assets/favicon.svg assets/Marmelad-Regular.ttf _site/assets/
+          cp -- assets/wiki.css assets/landing.css assets/wiki.js assets/mark.svg assets/favicon.svg assets/Marmelad-Regular.ttf assets/item-textures.svg assets/item-icons.json _site/assets/
           mkdir _site/assets/items
           cp -- assets/items/*.png _site/assets/items/
       - uses: actions/upload-pages-artifact@v3
