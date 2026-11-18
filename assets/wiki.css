@@ -1,4 +1,4 @@
-@font-face{font-family:'Marmelad';src:url('Marmelad-Regular.ttf?v=20261115-r8') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Marmelad';src:url('Marmelad-Regular.ttf?v=20261118-stirrups') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 @layer reset,base,layout,components,responsive;
 @layer reset{*{box-sizing:border-box}body,h1,h2,h3,p,figure{margin:0}button,input,select{font:inherit}img{max-width:100%}button,a,input,select{-webkit-tap-highlight-color:transparent}html{scroll-padding-top:98px;scroll-behavior:auto}}
 @layer base{
